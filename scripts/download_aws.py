@@ -61,10 +61,16 @@ def download_landsat_cloud(product_id, bands, start_date, end_date, output_path)
     bands_to_find = [b.strip() for b in bands]
     
     for band in bands_to_find:
-        # Planetary computer names their assets exactly as 'SR_B2', 'ST_B10', etc.
-        if band in item.assets:
-            asset_href = item.assets[band].href
-            
+        band_suffix = f"_{band}.TIF".lower()
+        asset_href = None
+        
+        # Search all assets for the one whose filename ends with our band (e.g. _SR_B2.TIF)
+        for asset_key, asset in item.assets.items():
+            if asset.href.lower().endswith(band_suffix):
+                asset_href = asset.href
+                break
+                
+        if asset_href:
             # The direct download URL is the asset link + the access token
             download_url = f"{asset_href}?{sas_token}"
             
