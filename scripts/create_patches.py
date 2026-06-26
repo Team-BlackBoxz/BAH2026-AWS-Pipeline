@@ -41,7 +41,7 @@ def save_as_png(data, path):
     stretched = percentile_stretch(data)
     cv2.imwrite(path, stretched)
 
-def create_patches(input_root, output_root):
+def create_patches(input_root, output_root, stride=32):
     os.makedirs(output_root, exist_ok=True)
     logger = setup_logging(output_root)
     
@@ -88,8 +88,8 @@ def create_patches(input_root, output_root):
         logger.info(f"Generating full dataset patches for {product_id}...")
 
         count = 0
-        for y in range(0, h200 - 256 + 1, 256):
-            for x in range(0, w200 - 256 + 1, 256):
+        for y in range(0, h200 - 256 + 1, stride):
+            for x in range(0, w200 - 256 + 1, stride):
                 patch_200m_tir = tir_200m[..., y:y+256, x:x+256]
 
                 y100, x100 = 2*y, 2*x
@@ -99,7 +99,7 @@ def create_patches(input_root, output_root):
                 if patch_100m_tir_512.shape[-2:] != (512, 512) or patch_100m_rgb_512.shape[-2:] != (512, 512):
                     continue
 
-                sample_dir = os.path.join(output_root, product_id, f'sample_{count:03d}')
+                sample_dir = os.path.join(output_root, product_id, f'sample_{count:04d}')
                 os.makedirs(sample_dir, exist_ok=True)
 
                 # Save .npy and .png
@@ -121,5 +121,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create co-registered image patches.')
     parser.add_argument('--input_dir', type=str, default='input', help='Path to input root directory.')
     parser.add_argument('--output_dir', type=str, default='output/patches', help='Path to output directory.')
+    parser.add_argument('--stride', type=int, default=32, help='Stride for sliding window overlap.')
     args = parser.parse_args()
-    create_patches(args.input_dir, args.output_dir)
+    create_patches(args.input_dir, args.output_dir, args.stride)
