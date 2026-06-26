@@ -99,6 +99,16 @@ def create_patches(input_root, output_root, stride=32):
                 if patch_100m_tir_512.shape[-2:] != (512, 512) or patch_100m_rgb_512.shape[-2:] != (512, 512):
                     continue
 
+                # 1. NoData Filter: Drop patches that have more than 5% black (0) pixels
+                if np.count_nonzero(patch_100m_rgb_512 == 0) / patch_100m_rgb_512.size > 0.05:
+                    continue
+                    
+                # 2. Cloud Filter: Landsat Collection 2 pixels > 30000 are extremely bright (reflectance > 0.6)
+                # If more than 30% of the patch is solid white/clouds, throw it in the trash!
+                if np.count_nonzero(patch_100m_rgb_512 > 30000) / patch_100m_rgb_512.size > 0.30:
+                    continue
+
+
                 sample_dir = os.path.join(output_root, product_id, f'sample_{count:04d}')
                 os.makedirs(sample_dir, exist_ok=True)
 
