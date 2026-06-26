@@ -10,6 +10,10 @@ from download_aws import download_landsat_cloud
 def run_massive_orchestrator():
     print("🌍 Starting Headless Massive Dataset Orchestrator...")
     
+    # If your run crashed, you can change this number to resume where you left off!
+    # (e.g., if it crashed on region 18, set START_INDEX = 18)
+    START_INDEX = 1
+    
     # 25 highly diverse global locations (avoiding pure ocean).
     # This will generate ~20,000 patches and take roughly 1 hour 15 mins to run.
     regions = [
@@ -40,6 +44,10 @@ def run_massive_orchestrator():
         ("226", "071", "Rio de Janeiro, Brazil (Coastal/Forest)")
     ]
     
+    # Slice the list to start from the START_INDEX
+    # (Subtract 1 because lists are 0-indexed, but our regions start at 1)
+    regions = regions[START_INDEX - 1:]
+    
     start_date = "2023-01-01"
     end_date = "2023-12-31"
     bands = ["SR_B2", "SR_B3", "SR_B4", "ST_B10"]
@@ -60,10 +68,17 @@ def run_massive_orchestrator():
         # 1. Download
         download_landsat_cloud(product_id, bands, start_date, end_date, output_path)
         
-        # 2. Run driver.py
-        driver_path = os.path.join(base_dir, 'driver.py')
-        print("⚙️ Running driver.py to process patches...")
-        subprocess.run(["python", driver_path], check=True)
+        # Check if download succeeded before running driver
+        if os.path.exists(output_path) and os.listdir(output_path):
+            # 2. Run driver.py
+            driver_path = os.path.join(base_dir, 'driver.py')
+            print("⚙️ Running driver.py to process patches...")
+            try:
+                subprocess.run(["python", driver_path], check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"⚠️ Warning: driver.py failed for {name}. Skipping to next region.")
+        else:
+            print(f"⚠️ Warning: Download failed or was empty for {name}. Skipping.")
         
         # 3. Clean up to save space!
         print("🧹 Cleaning up heavy raw files to save Kaggle disk space...")
