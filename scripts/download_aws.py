@@ -64,6 +64,9 @@ def download_landsat_aws(product_id, bands, start_date, end_date, output_path):
             out_filename = f"{product_id}_{short_band}.TIF"
             local_path = os.path.join(output_path, out_filename)
             
+             # Convert the internal s3:// link to a public https:// web link
+            if asset_href.startswith("s3://usgs-landsat/"):
+                asset_href = asset_href.replace("s3://usgs-landsat/", "https://usgs-landsat.s3.us-west-2.amazonaws.com/")
             logger.info(f"Downloading {band} from {asset_href} ...")
             try:
                 download_file(asset_href, local_path)
