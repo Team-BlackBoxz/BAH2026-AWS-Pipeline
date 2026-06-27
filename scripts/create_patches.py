@@ -55,8 +55,10 @@ def create_patches(input_root, output_root, stride=32):
     products = set()
     for f in all_files:
         filename = os.path.basename(f)
-        # Assume filename format: {product_id}_...
-        product_id = filename.split('_')[0]
+        if not filename.endswith('.tif'): 
+            continue
+        # Extract the real product ID by removing the suffixes added by driver.py
+        product_id = filename.replace('_tir_200m.tif', '').replace('_tir_100m.tif', '').replace('_rgb_100m.tif', '')
         products.add(product_id)
 
     logger.info(f"Found {len(products)} products in {input_root}")
