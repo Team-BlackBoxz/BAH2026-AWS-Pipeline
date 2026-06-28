@@ -17,40 +17,40 @@ def run_massive_orchestrator():
     # 25 highly diverse global locations (avoiding pure ocean).
     # This will generate ~20,000 patches and take roughly 1 hour 15 mins to run.
     regions = [
-        # Deserts
-        ("039", "035", "Las Vegas, USA (Desert)"),
-        ("006", "071", "Lima, Peru (Desert/Coastal)"),
-        ("165", "043", "Riyadh, Saudi Arabia (Desert)"),
-        ("176", "043", "Tehran, Iran (Desert/Mountains)"),
+        # 🇮🇳 Indian Cities (Focusing on local accuracy)
+        ("137", "042", "Guwahati (River/Urban)"),
+        ("148", "039", "New Delhi (Dense Urban/Pollution)"),
+        ("146", "044", "Mumbai (Coastal/Urban)"),
+        ("144", "049", "Chennai (Coastal/Tropical)"),
+        ("148", "047", "Bangalore (Urban/Vegetation)"),
         
-        # Snow & Mountains
-        ("047", "026", "Vancouver, Canada (Snow/Forest)"),
-        ("178", "021", "Moscow, Russia (Snow/Urban)"),
-        ("034", "032", "Denver, USA (Mountains/Urban)"),
-        ("007", "057", "Bogota, Colombia (Mountains)"),
+        # 🏙️ Dense Global Urban Metropolises
+        ("014", "032", "New York City, USA (Concrete Jungle)"),
+        ("040", "036", "Los Angeles, USA (Sprawl/Desert)"),
+        ("119", "038", "Shanghai, China (Massive Density)"),
+        ("107", "035", "Tokyo, Japan (Mega-city/Islands)"),
+        ("170", "055", "Cape Town, South Africa (Coastal/Mountain)"),
         
-        # Dense Urban Metropolises
-        ("199", "024", "Paris, France (Urban)"),
-        ("191", "031", "Rome, Italy (Urban/Historical)"),
-        ("123", "032", "Beijing, China (Dense Urban)"),
-        ("116", "034", "Seoul, South Korea (Mountains/Urban)"),
-        ("181", "031", "Istanbul, Turkey (Urban/Coastal)"),
-        ("195", "028", "Madrid, Spain (Urban)"),
+        # 🏜️ Deserts & Arid Landscapes
+        ("233", "079", "Amazon Rainforest, Brazil (Dense Greenery)"),
+        ("180", "040", "Sahara Desert Edge, Egypt (Sand/Rock)"),
+        ("175", "043", "Nairobi, Kenya (Savanna/Urban)"),
         
-        # Tropical & Coastal
-        ("089", "084", "Sydney, Australia (Coastal/Urban)"),
-        ("130", "054", "Bangkok, Thailand (Tropical Urban)"),
-        ("189", "055", "Lagos, Nigeria (Coastal/Tropical)"),
-        ("066", "045", "Honolulu, Hawaii (Volcano/Island)"),
-        ("023", "039", "Houston, USA (Coastal Urban)"),
-        ("225", "084", "Buenos Aires, Argentina (Coastal)"),
+        # 🌲 Forests, Agriculture, and Greenery
+        ("192", "024", "Berlin, Germany (Temperate Forest/Urban)"),
+        ("202", "024", "London, UK (Temperate/Agriculture)"),
+        ("045", "029", "Yellowstone, USA (Forest/Geothermal)"),
+        ("164", "043", "Mount Kilimanjaro, Tanzania (Snow/Mountain)"),
+        ("113", "050", "Bali, Indonesia (Island/Volcano)"),
         
-        # Diverse Additions
-        ("170", "078", "Johannesburg, South Africa (Urban/Arid)"),
-        ("183", "033", "Athens, Greece (Coastal/Historical)"),
-        ("026", "047", "Mexico City, Mexico (High Altitude Urban)"),
-        ("015", "033", "Washington DC, USA (Urban/Forest)"),
-        ("200", "024", "Brussels, Belgium (Urban/Agriculture)")
+        # 🌊 Water Boundaries and Coastlines
+        ("091", "086", "Great Barrier Reef Edge, Australia (Coast/Coral)"),
+        ("022", "039", "Mississippi River Delta, USA (Wetlands)"),
+        ("176", "039", "Dubai, UAE (Desert/Coast/Artificial Islands)"),
+        ("001", "072", "Andes Mountains, Chile (Snow/Rock)"),
+        ("117", "044", "Taipei, Taiwan (Tropical/Mountain)"),
+        ("140", "041", "Kathmandu, Nepal (Himalayas)"),
+        ("226", "071", "Rio de Janeiro, Brazil (Coastal/Forest)")
     ]
     
     # Slice the list to start from the START_INDEX
