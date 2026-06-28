@@ -1,4 +1,4 @@
-# 🚀 Bhartiya Antriksh Hackathon (BAH) 2026
+# Bhartiya Antriksh Hackathon (BAH) 2026
 
 ## Problem Statement: Infrared Image Colorization and Enhancement for Improved Object Interpretation
 
@@ -76,7 +76,7 @@ python driver.py
    - **SR Pair**: 256x256 (200m TIR) $\rightarrow$ 512x512 (100m TIR).
    - **Colorization Pair**: 256x256 (100m TIR) $\rightarrow$ 256x256 (100m RGB).
 4. **Save Output**: Both `.npy` (for training) and `.png` (for verification) files are saved in `output/patches/`.
-   - ⚠️ **Important**: Do **not** train your models on the `.png` files. `.png` files are intended for visualization purposes only. For training, use the `.npy` files to maintain the original radiometric resolution of the data.
+   -  **Important**: Do **not** train your models on the `.png` files. `.png` files are intended for visualization purposes only. For training, use the `.npy` files to maintain the original radiometric resolution of the data.
 
 ### Technical Alignment
 The baseline ensures strict spatial co-registration:
